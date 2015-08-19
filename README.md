@@ -12,7 +12,7 @@ Java version of Flask's MiniTwit example built with the Spark Framework, Spring 
 
 1. Clone the repository and go to the root directory.
 
-2. Execute `mvn exec:java`
+2. Execute `mvn compile exec:java`
 
 3. Open in your browser `http://localhost:4567/`
 
