@@ -11,7 +11,7 @@
 		<spark-core.version>2.2</spark-core.version>
 		<spark-template-freemarker.version>2.3</spark-template-freemarker.version>
 		<freemarker.version>2.3.23</freemarker.version>
-		<spring.version>4.2.0.RELEASE</spring.version>
+		<spring.version>4.3.2.RELEASE</spring.version>
 		<hsqldb.version>2.3.3</hsqldb.version>
 		<dbcp.version>2.1.1</dbcp.version>
 		<jbcrypt.version>0.4</jbcrypt.version>
