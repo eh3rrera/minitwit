@@ -5,6 +5,7 @@
   <version>1.0-SNAPSHOT</version>
   
   <properties>
+  		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.8</jdk.version>
 		<spark.version>2.2</spark.version>
 		<spark.freemarker.version>2.0.0</spark.freemarker.version>
