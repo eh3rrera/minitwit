@@ -31,3 +31,4 @@ local.properties
 
 #Target directory
 target/*
+/target/
