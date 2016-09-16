@@ -24,11 +24,3 @@ MIT License
 See LICENSE for details.
 
 Flask's MiniTwit (c) 2015 by Armin Ronacher.
-
-run
-
-/projects/minitwit
-
-clean install && compile exec:java
-
-http://${server.port.4567}
