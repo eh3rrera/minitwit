@@ -16,7 +16,7 @@ public class DatabaseConfig {
 		
 		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 		EmbeddedDatabase db = builder
-				.setType(EmbeddedDatabaseType.HSQL)
+				.setType(EmbeddedDatabaseType.H2)
 				.addScript("sql/create-db.sql")
 				.addScript("sql/insert-data.sql")
 				.build();
