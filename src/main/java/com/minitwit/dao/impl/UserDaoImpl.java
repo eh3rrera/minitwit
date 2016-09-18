@@ -47,8 +47,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void insertFollower(User follower, User followee) {
 		Map<String, Object> params = new HashMap<String, Object>();
-        params.put("follower", follower.getId());
-        params.put("followee", followee.getId());
+        params.put("follower", follower.getUserId());
+        params.put("followee", followee.getUserId());
         
 		String sql = "insert into follower (follower_id, followee_id) values (:follower, :followee)";
 		
@@ -58,8 +58,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteFollower(User follower, User followee) {
 		Map<String, Object> params = new HashMap<String, Object>();
-        params.put("follower", follower.getId());
-        params.put("followee", followee.getId());
+        params.put("follower", follower.getUserId());
+        params.put("followee", followee.getUserId());
         
 		String sql = "delete from follower where follower_id = :follower and followee_id = :followee";
 		
@@ -69,8 +69,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public boolean isUserFollower(User follower, User followee) {
 		Map<String, Object> params = new HashMap<String, Object>();
-        params.put("follower", follower.getId());
-        params.put("followee", followee.getId());
+        params.put("follower", follower.getUserId());
+        params.put("followee", followee.getUserId());
         
 		String sql = "select count(1) from follower where " +
             "follower.follower_id = :follower and follower.followee_id = :followee";
@@ -95,7 +95,7 @@ public class UserDaoImpl implements UserDao {
 	private RowMapper<User> userMapper = (rs, rowNum) -> {
 		User u = new User();
 		
-		u.setId(rs.getInt("user_id"));
+		u.setUserId(rs.getInt("user_id"));
 		u.setEmail(rs.getString("email"));
 		u.setUsername(rs.getString("username"));
 		u.setPassword(rs.getString("pw"));

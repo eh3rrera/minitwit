@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message {
-	private int id;
+	private int messageId;
 	
 	private int userId;
 	
@@ -18,12 +18,12 @@ public class Message {
 	
 	private String gravatar;
 
-	public int getId() {
-		return id;
+	public int getMessageId() {
+		return messageId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setMessageId(int messageId) {
+		this.messageId = messageId;
 	}
 
 	public int getUserId() {

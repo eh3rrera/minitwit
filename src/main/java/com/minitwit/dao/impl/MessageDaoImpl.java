@@ -31,7 +31,7 @@ public class MessageDaoImpl implements MessageDao {
 	@Override
 	public List<Message> getUserTimelineMessages(User user) {
 		Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id", user.getId());
+        params.put("id", user.getUserId());
         
 		String sql = "select message.*, user.* from message, user where " +
 				"user.user_id = message.author_id and user.user_id = :id " +
@@ -44,7 +44,7 @@ public class MessageDaoImpl implements MessageDao {
 	@Override
 	public List<Message> getUserFullTimelineMessages(User user) {
 		Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id", user.getId());
+        params.put("id", user.getUserId());
         
 		String sql = "select message.*, user.* from message, user " +
 				"where message.author_id = user.user_id and ( " +
@@ -83,7 +83,7 @@ public class MessageDaoImpl implements MessageDao {
 	private RowMapper<Message> messageMapper = (rs, rowNum) -> {
 		Message m = new Message();
 		
-		m.setId(rs.getInt("message_id"));
+		m.setMessageId(rs.getInt("message_id"));
 		m.setUserId(rs.getInt("author_id"));
 		m.setUsername(rs.getString("username"));
 		m.setText(rs.getString("text"));
