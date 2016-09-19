@@ -56,6 +56,7 @@ public class MiniTwitService {
 	public LoginResult checkUser(User user) {
 		LoginResult result = new LoginResult();
 		User userFound = userDao.getUserbyUsername(user.getUsername());
+
 		if(userFound == null) {
 			result.setError("Invalid username");
 		} else if(!PasswordUtil.verifyPassword(user.getPassword(), userFound.getPassword())) {

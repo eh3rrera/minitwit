@@ -11,6 +11,7 @@ import com.minitwit.service.impl.MiniTwitService;
 @Configuration
 @ComponentScan({ "com.minitwit" })
 public class App {
+
   public static void main(String[] args) {
     port(getHerokuAssignedPort());
     @SuppressWarnings("resource")
