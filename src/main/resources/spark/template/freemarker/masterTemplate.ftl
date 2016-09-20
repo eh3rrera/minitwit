@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <title>${title} | MiniTwit</title>
     <link href="/jquery-validation/validate.css" type="text/css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href="/css/style.css" type="text/css" rel="stylesheet" />
     <script src="/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
     <script src="/jquery-validation/messages_ja.js" type="text/javascript"></script>

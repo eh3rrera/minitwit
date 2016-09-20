@@ -14,11 +14,24 @@
     <#elseif pageTitle != 'Public Timeline'>
       <div class="twitbox">
         <h3>What's on your mind ${user.username}?</h3>
-        <form action="/message" method="post">
+        <form id="messageForm" action="/message" method="post">
           <p>
-          <input type="text" name="text" size="60" maxlength="160">
+          <input type="text" name="text">
+          <p>
           <input type="submit" value="Share">
         </form>
+        <script>
+          $(document).ready(function() {
+            $("#messageForm").validate({
+              rules: {
+                text: {
+                  required: true,
+                  maxlength: 160
+                }
+              }
+            });
+          });
+        </script>
       </div>
     </#if>
   </#if>

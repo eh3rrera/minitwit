@@ -13,16 +13,28 @@
   <form id="loginForm" action="/login" method="post">
     <dl>
       <dt>Username:
-	    <dd><input type="text" class="required" id="username" name="username" size="30" maxlength="50" value="${username!}">
+	    <dd><input type="text" name="username" value="${username!}">
 	    <dt>Password:
-	    <dd><input type="password" class="required" id="password" name="password" size="30">
+	    <dd><input type="password" name="password">
 	  </dl>
 	  <div class="actions"><input type="submit" value="Sign In"></div>
 	</form>
 
   <script>
     $(document).ready(function() {
-      $("#loginForm").validate();
+      $("#loginForm").validate({
+        rules: {
+          username: {
+            required: true,
+            minlength: 2,
+            maxlength: 50
+          },
+          password: {
+            required: true,
+            minlength: 5
+          }
+        }
+      });
     });
   </script>
 </@layout.masterTemplate>
