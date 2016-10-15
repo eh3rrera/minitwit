@@ -29,34 +29,20 @@ public class WebConfig {
 	
 	private static final String USER_SESSION_ID = "user";
 	private MiniTwitService service;
-	 
 
 	public WebConfig(MiniTwitService service) {
 		this.service = service;
 		staticFileLocation("/public");
 		setupRoutes();
 	}
-	
+
 	private void setupRoutes() {
-		/*
-		 * Shows a users timeline or if no user is logged in,
-		 *  it will redirect to the public timeline.
-		 *  This timeline shows the user's messages as well
-		 *  as all the messages of followed users.
-		 */
 		get(
 		  "/",
 		  (req, res) -> {
-    		User user = getAuthenticatedUser(req);
-    		Map<String, Object> map = new HashMap<>();
-    		map.put("pageTitle", "Timeline");
-    		map.put("user", user);
-    		List<Message> messages = service.getUserFullTimelineMessages(user);
-    		map.put("messages", messages);
-
-    		return new ModelAndView(map, "timeline.ftl");
+        return new ModelAndView(null, null);
       },
-  		new FreeMarkerEngine()
+      new FreeMarkerEngine()
 		);
 
 		before(
@@ -64,77 +50,145 @@ public class WebConfig {
 		  (req, res) -> {
     		User user = getAuthenticatedUser(req);
 
-    		if(user == null) {
-    			res.redirect("/public");
+    		if (user == null) {
+    			res.redirect("/public/5/1");
     			halt();
+    		} else {
+          res.redirect("/full/5/1");
+          halt();
     		}
   		}
   	);
 
-		/*
-		 * Displays the latest messages of all users.
-		 */
-		get(
-		  "/public",
-		  (req, res) -> {
-    		User user = getAuthenticatedUser(req);
-    		Map<String, Object> map = new HashMap<>();
-    		map.put("pageTitle", "Public Timeline");
-    		map.put("user", user);
-    		List<Message> messages = service.getPublicTimelineMessages();
-    		map.put("messages", messages);
+    get(
+      "/full/:step/:pagenow",
+      (req, res) -> {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageTitle", "Timeline");
+        map.put("kind", "full");
+        User user = getAuthenticatedUser(req);
+        map.put("user", user);
+        int step = Integer.parseInt(req.params(":step"));
+        map.put("step", step);
+        int pageNow = Integer.parseInt(req.params(":pagenow"));
+        map.put("pagenow", pageNow);
+        int count = service.getUserFullCount(user);
+        map.put("count", count);
+        int pageTotal = (int) Math.ceil(count / step);
+        map.put("pagetotal", pageTotal);
+        List<Message> messages = service.getUserFullTimelineMessages(user, step, pageNow);
+        map.put("messages", messages);
+        return new ModelAndView(map, "timeline.ftl");
+      },
+      new FreeMarkerEngine()
+    );
 
+    before(
+      "/full/:step/:pagenow",
+      (req, res) -> {
+        User user = getAuthenticatedUser(req);
+
+        if(user == null) {
+          res.redirect("/public/:step/:pagenow");
+          halt();
+        }
+      }
+    );
+
+		get(
+		  "/public/:step/:pagenow",
+		  (req, res) -> {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageTitle", "Public Timeline");
+        map.put("kind", "public");
+        User user = getAuthenticatedUser(req);
+        map.put("user", user);
+        int step = Integer.parseInt(req.params(":step"));
+        map.put("step", step);
+        int pageNow = Integer.parseInt(req.params(":pagenow"));
+        map.put("pagenow", pageNow);
+        int count = service.getCount();
+        map.put("count", count);
+        int pageTotal = (int) Math.ceil(count / step);
+        map.put("pagetotal", pageTotal);
+    		List<Message> messages = service.getPublicTimelineMessages(step, pageNow);
+        map.put("messages", messages);
     		return new ModelAndView(map, "timeline.ftl");
       },
 		  new FreeMarkerEngine()
 		);
 
-		/*
-		 * Displays a user's tweets.
-		 */
 		get(
-		  "/t/:username",
+		  "/t",
 		  (req, res) -> {
-  			String username = req.params(":username");
-  			User profileUser = service.getUserbyUsername(username);
-  			User authUser = getAuthenticatedUser(req);
-  			boolean followed = false;
-  
-  			if(authUser != null) {
-  				followed = service.isUserFollower(authUser, profileUser);
-  			}
-  
-  			List<Message> messages = service.getUserTimelineMessages(profileUser);
-  			Map<String, Object> map = new HashMap<>();
-  			map.put("pageTitle", username + "'s Timeline");
-  			map.put("user", authUser);
-  			map.put("profileUser", profileUser);
-  			map.put("followed", followed);
-  			map.put("messages", messages);
-  
-  			return new ModelAndView(map, "timeline.ftl");
+  			return new ModelAndView(null, null);
       },
 		  new FreeMarkerEngine()
 		);
 
-		/*
-		 * Checks if the user exists
-		 */
 		before(
-		  "/t/:username",
+		  "/t",
 		  (req, res) -> {
-  			String username = req.params(":username");
-  			User profileUser = service.getUserbyUsername(username);
-  
-  			if(profileUser == null) {
-  				halt(404, "User not Found");
-  			}
+        User user = getAuthenticatedUser(req);
+
+        if (user == null) {
+          res.redirect("/public/5/1");
+          halt();
+        } else {
+          String username = user.getUsername();
+          res.redirect("/t/" + username + "/5/1");
+          halt();
+        }
 		  }
 		);
 
-		/*
-		 * Adds the current user as follower of the given user.
-		 */
+    get(
+      "/t/:username/:step/:pagenow",
+      (req, res) -> {
+        Map<String, Object> map = new HashMap<>();
+        String username = req.params(":username");
+        map.put("pageTitle", username + "'s Timeline");
+        map.put("kind", "t/" + username);
+        User profileUser = service.getUserbyUsername(username);
+        map.put("profileUser", profileUser);
+        map.put("profileUserId", profileUser.getUserId());
+        User authUser = getAuthenticatedUser(req);
+        map.put("user", authUser);
+        map.put("userId", authUser.getUserId());
+        boolean followed = false;
+  
+        if(authUser != null) {
+          followed = service.isUserFollower(authUser, profileUser);
+        }
+  
+        map.put("followed", followed);
+        int step = Integer.parseInt(req.params(":step"));
+        map.put("step", step);
+        int pageNow = Integer.parseInt(req.params(":pagenow"));
+        map.put("pagenow", pageNow);
+        int count = service.getUserCount(profileUser);
+        map.put("count", count);
+        int pageTotal = (int) Math.ceil(count / step);
+        map.put("pagetotal", pageTotal);
+        List<Message> messages = service.getUserTimelineMessages(profileUser, step, pageNow);
+        map.put("messages", messages);
+        return new ModelAndView(map, "timeline.ftl");
+      },
+      new FreeMarkerEngine()
+    );
+
+    before(
+      "/t/:username/:step/:pagenow",
+      (req, res) -> {
+        String username = req.params(":username");
+        User profileUser = service.getUserbyUsername(username);
+
+        if(profileUser == null) {
+          halt(404, "User not Found");
+        }
+      }
+    );
+
 		get(
 		  "/t/:username/follow",
 		  (req, res) -> {
@@ -143,14 +197,10 @@ public class WebConfig {
   			User authUser = getAuthenticatedUser(req);
   			service.followUser(authUser, profileUser);
   			res.redirect("/t/" + username);
-
   			return null;
       }
 		);
 
-		/*
-		 * Checks if the user is authenticated and the user to follow exists
-		 */
 		before(
 		  "/t/:username/follow",
 		  (req, res) -> {
@@ -166,9 +216,6 @@ public class WebConfig {
 		  }
 		);
 
-		/*
-		 * Removes the current user as follower of the given user.
-		 */
 		get(
 		  "/t/:username/unfollow",
 		  (req, res) -> {
@@ -177,14 +224,10 @@ public class WebConfig {
   			User authUser = getAuthenticatedUser(req);
   			service.unfollowUser(authUser, profileUser);
   			res.redirect("/t/" + username);
-
   			return null;
       }
 		);
 
-		/*
-		 * Checks if the user is authenticated and the user to unfollow exists
-		 */
 		before(
 		  "/t/:username/unfollow",
 		  (req, res) -> {
@@ -201,10 +244,6 @@ public class WebConfig {
 		  }
 		);
 
-		/*
-		 * Presents the login form or redirect the user to
-		 * her timeline if it's already logged in
-		 */
 		get(
 		  "/login",
 		  (req, res) -> {
@@ -219,9 +258,6 @@ public class WebConfig {
 		  new FreeMarkerEngine()
 		);
 
-		/*
-		 * Logs the user in.
-		 */
 		post(
 		  "/login",
 		  (req, res) -> {
@@ -239,24 +275,20 @@ public class WebConfig {
 
   			LoginResult result = service.checkUser(user);
 
-  			if(result.getUser() != null) {
-  				addAuthenticatedUser(req, result.getUser());
-  				res.redirect("/");
-  				halt();
+  			if(result.getUser() == null) {
+          map.put("error", result.getError());
   			} else {
-  				map.put("error", result.getError());
+          addAuthenticatedUser(req, result.getUser());
+          res.redirect("/");
+          halt();
   			}
 
   			map.put("username", user.getUsername());
-
   			return new ModelAndView(map, "login.ftl");
       },
 		  new FreeMarkerEngine()
 		);
 
-		/*
-		 * Checks if the user is already authenticated
-		 */
 		before(
 		  "/login",
 		  (req, res) -> {
@@ -269,23 +301,15 @@ public class WebConfig {
 		  }
 		);
 
-		/*
-		 * Presents the register form or redirect the user to
-		 * her timeline if it's already logged in
-		 */
 		get(
 		  "/register",
 		  (req, res) -> {
   			Map<String, Object> map = new HashMap<>();
-
   			return new ModelAndView(map, "register.ftl");
       },
 		  new FreeMarkerEngine()
 		);
 
-		/*
-		 * Registers the user.
-		 */
 		post(
 		  "/register",
 		  (req, res) -> {
@@ -318,15 +342,11 @@ public class WebConfig {
   			map.put("error", error);
   			map.put("username", user.getUsername());
   			map.put("email", user.getEmail());
-
   			return new ModelAndView(map, "register.ftl");
       },
 		  new FreeMarkerEngine()
 		);
 
-		/*
-		 * Checks if the user is already authenticated
-		 */
 		before(
 		  "/register",
 		  (req, res) -> {
@@ -339,9 +359,6 @@ public class WebConfig {
 		  }
 		);
 
-		/*
-		 * Registers a new message for the user.
-		 */
 		post(
 		  "/message",
 		  (req, res) -> {
@@ -354,14 +371,10 @@ public class WebConfig {
   			BeanUtils.populate(m, params);
   			service.addMessage(m);
   			res.redirect("/");
-
   			return null;
       }
 		);
 
-		/*
-		 * Checks if the user is authenticated
-		 */
 		before(
 		  "/message",
 		  (req, res) -> {
@@ -374,15 +387,11 @@ public class WebConfig {
 		  }
 		);
 
-		/*
-		 * Logs the user out and redirects to the public timeline
-		 */
 		get(
 		  "/logout",
 		  (req, res) -> {
   			removeAuthenticatedUser(req);
-  			res.redirect("/public");
-
+  			res.redirect("/public/5/1");
   			return null;
       }
 		);

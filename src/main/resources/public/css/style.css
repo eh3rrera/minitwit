@@ -170,3 +170,9 @@ div.success {
 	padding: 4px;
 	font-size: 13px;
 }
+
+.onlydigit {
+  width: 30px;
+  ime-mode: disabled;
+  text-align: right;
+}

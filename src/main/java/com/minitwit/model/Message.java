@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class Message {
 
-  private int messageId;
-	private int userId;
+  private int messageid;
+	private int userid;
 	private String username;
 	private String text;
 	private Date pubDate;
@@ -14,19 +14,19 @@ public class Message {
 	private String gravatar;
 
 	public int getMessageId() {
-		return messageId;
+		return messageid;
 	}
 
-	public void setMessageId(int messageId) {
-		this.messageId = messageId;
+	public void setMessageId(int messageid) {
+		this.messageid = messageid;
 	}
 
 	public int getUserId() {
-		return userId;
+		return userid;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId(int userid) {
+		this.userid = userid;
 	}
 
 	public String getUsername() {

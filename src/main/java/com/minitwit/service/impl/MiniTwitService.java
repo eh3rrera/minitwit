@@ -21,16 +21,16 @@ public class MiniTwitService {
 	@Autowired
 	private MessageDao messageDao;
 	
-	public List<Message> getUserFullTimelineMessages(User user) {
-		return messageDao.getUserFullTimelineMessages(user);
+	public List<Message> getUserFullTimelineMessages(User user, int step, int pageNow) {
+		return messageDao.getUserFullTimelineMessages(user, step, pageNow);
 	}
 	
-	public List<Message> getUserTimelineMessages(User user) {
-		return messageDao.getUserTimelineMessages(user);
+	public List<Message> getUserTimelineMessages(User user, int step, int pageNow) {
+		return messageDao.getUserTimelineMessages(user, step, pageNow);
 	}
 	
-	public List<Message> getPublicTimelineMessages() {
-		return messageDao.getPublicTimelineMessages();
+	public List<Message> getPublicTimelineMessages(int step, int pageNow) {
+		return messageDao.getPublicTimelineMessages(step, pageNow);
 	}
 	
 	public User getUserbyUsername(String username) {
@@ -80,4 +80,16 @@ public class MiniTwitService {
 	public void setMessageDao(MessageDao messageDao) {
 		this.messageDao = messageDao;
 	}
+
+  public int getCount() {
+    return messageDao.getCount();
+  }
+
+  public int getUserFullCount(User user) {
+    return messageDao.getUserFullCount(user);
+  }
+
+  public int getUserCount(User user) {
+    return messageDao.getUserCount(user);
+  }
 }

@@ -20,21 +20,5 @@
 	  <div class="actions"><input type="submit" value="Sign In"></div>
 	</form>
 
-  <script>
-    $(document).ready(function() {
-      $("#loginForm").validate({
-        rules: {
-          username: {
-            required: true,
-            minlength: 2,
-            maxlength: 50
-          },
-          password: {
-            required: true,
-            minlength: 5
-          }
-        }
-      });
-    });
-  </script>
+  <script type="text/javascript" src="/js/login.js"></script>
 </@layout.masterTemplate>

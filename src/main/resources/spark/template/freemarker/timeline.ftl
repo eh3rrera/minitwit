@@ -1,9 +1,52 @@
 <#import "masterTemplate.ftl" as layout />
 
 <@layout.masterTemplate title="Timeline">
-  <h2>${pageTitle}</h2>
+	<table>
+		<tr>
+			<td>
+		  <h2>${pageTitle}</h2>
+			</td>
+		  <#if pagenow == 1>
+				<td>&nbsp;<<&nbsp;</td>
+				<td>&nbsp;<&nbsp;</td>
+		  <#else>
+				<td>
+					<a href="/${kind}/${step}/1">&nbsp;<<&nbsp;</a>
+				</td>
+				<td>
+					<a href="/${kind}/${step}/${pagenow - 1}">&nbsp;<&nbsp;</a>
+				</td>
+		  </#if>
+			<td>
+				<input type="text" class="onlydigit" id="pagenow" value="${pagenow}">
+				&nbsp;of&nbsp;
+				<span id="pagetotal">${pagetotal}</span>
+				&nbsp;pages
+				<input type="hidden" id="hidden_pagenow" value="${pagenow}">
+			</td>
+		  <#if pagenow == pagetotal>
+				<td>&nbsp;>&nbsp;</td>
+				<td>&nbsp;>>&nbsp;</td>
+		  <#else>
+				<td>
+					<a href="/${kind}/${step}/${pagenow + 1}">&nbsp;>&nbsp;</a>
+				</td>
+				<td>
+					<a href="/${kind}/${step}/${pagetotal}">&nbsp;>>&nbsp;</a>
+				</td>
+		  </#if>
+			<td>
+				<input type="text" class="onlydigit" id="step" value="${step}">
+				&nbsp;rows&nbsp;/&nbsp;page
+				<input type="hidden" id="hidden_kind" value="${kind}">
+				<input type="hidden" id="hidden_step" value="${step}">
+				<input type="hidden" id="hidden_count" value="${count}">
+			</td>
+		</tr>
+	</table>
+
   <#if user??>
-    <#if profileUser?? && user.id != profileUser.id>
+    <#if profileUser?? && userId != profileUserId>
       <div class="followstatus">
     		<#if followed>
     			<a class="unfollow" href="/t/${profileUser.username}/unfollow">Unfollow user</a>
@@ -20,21 +63,10 @@
           <p>
           <input type="submit" value="Share">
         </form>
-        <script>
-          $(document).ready(function() {
-            $("#messageForm").validate({
-              rules: {
-                text: {
-                  required: true,
-                  maxlength: 160
-                }
-              }
-            });
-          });
-        </script>
       </div>
     </#if>
   </#if>
+	
   <ul class="messages">
     <#if messages??>
       <#list messages as message>
@@ -54,4 +86,6 @@
 		  </li>
 		</#if>
 	</ul>
+
+  <script type="text/javascript" src="/js/timeline.js"></script>
 </@layout.masterTemplate>
