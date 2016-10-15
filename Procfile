@@ -1,1 +1,0 @@
-web: java -cp target/minitwit-1.0-SNAPSHOT-jar-with-dependencies.jar com.minitwit.App
