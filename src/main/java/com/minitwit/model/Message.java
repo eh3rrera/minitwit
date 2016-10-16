@@ -4,34 +4,29 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message {
-	private int id;
-	
-	private int userId;
-	
+
+  private int messageid;
+	private int userid;
 	private String username;
-	
 	private String text;
-	
 	private Date pubDate;
-	
 	private String pubDateStr;
-	
 	private String gravatar;
 
-	public int getId() {
-		return id;
+	public int getMessageId() {
+		return messageid;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setMessageId(int messageid) {
+		this.messageid = messageid;
 	}
 
 	public int getUserId() {
-		return userId;
+		return userid;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId(int userid) {
+		this.userid = userid;
 	}
 
 	public String getUsername() {
@@ -56,6 +51,7 @@ public class Message {
 
 	public void setPubDate(Date pubDate) {
 		this.pubDate = pubDate;
+
 		if(pubDate != null) {
 			pubDateStr = new SimpleDateFormat("yyyy-MM-dd @ HH:mm").format(pubDate);
 		}

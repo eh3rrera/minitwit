@@ -1,119 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.sparkjava</groupId>
-  <artifactId>minitwit</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  
-  <properties>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sparkjava</groupId>
+	<artifactId>minitwit</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.8</jdk.version>
-		<spark.version>2.2</spark.version>
-		<spark.freemarker.version>2.0.0</spark.freemarker.version>
+		<spark-core.version>2.2</spark-core.version>
+		<spark-template-freemarker.version>2.3</spark-template-freemarker.version>
 		<freemarker.version>2.3.23</freemarker.version>
-		<spring.version>4.2.0.RELEASE</spring.version>
-		<hsqldb.version>2.3.3</hsqldb.version>
-		<dbcp.version>2.1.1</dbcp.version>
-		<jbcrypt.version>0.4</jbcrypt.version>
+		<spring.version>4.3.2.RELEASE</spring.version>
+		<h2.version>1.4.192</h2.version>
+		<commons-dbcp2.version>2.1.1</commons-dbcp2.version>
+		<jbcrypt.version>0.4.1</jbcrypt.version>
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
+		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+		<exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+		<heroku-maven-plugin.version>1.1.1</heroku-maven-plugin.version>
 	</properties>
-  
-  <dependencies>
-  		<!-- Spark JAva -->
-	    <dependency>
-	        <groupId>com.sparkjava</groupId>
-	        <artifactId>spark-core</artifactId>
-	        <version>${spark.version}</version>
-	    </dependency>
-	    
-	    <!-- Spark Freemarker -->
-	    <dependency>
-	        <groupId>com.sparkjava</groupId>
-	        <artifactId>spark-template-freemarker</artifactId>
-	        <version>${spark.freemarker.version}</version>
-	    </dependency>
-	    
-	    <!-- Freemarker -->
-	    <dependency>
-	        <groupId>org.freemarker</groupId>
-	        <artifactId>freemarker</artifactId>
-	        <version>${freemarker.version}</version>
-	    </dependency>
-    
-    	<!-- Spring Core -->
-	    <dependency>
+
+	<dependencies>
+		<!-- Spark JAva -->
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-core</artifactId>
+			<version>${spark-core.version}</version>
+		</dependency>
+
+		<!-- Spark Freemarker -->
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-template-freemarker</artifactId>
+			<version>${spark-template-freemarker.version}</version>
+		</dependency>
+
+		<!-- Freemarker -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+
+		<!-- Spring Core -->
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-	
+
 		<!-- Spring Context -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-	
+
 		<!-- Spring JDBC -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-	
-		<!-- HyperSQL DB -->
+
+    <!-- H2 DB -->
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>${hsqldb.version}</version>
+		  <groupId>com.h2database</groupId>
+		  <artifactId>h2</artifactId>
+		  <version>${h2.version}</version>
 		</dependency>
-	
-		<!--  Connection pool -->
+
+		<!-- Connection pool -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
-			<version>${dbcp.version}</version>
+			<version>${commons-dbcp2.version}</version>
 		</dependency>
-		
+
 		<!-- Password hashes -->
 		<dependency>
 			<groupId>de.svenkubiak</groupId>
 			<artifactId>jBCrypt</artifactId>
 			<version>${jbcrypt.version}</version>
 		</dependency>
-		
+
 		<!-- Populate bean from request -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>${commons.beanutils.version}</version>
-		</dependency>	
-  </dependencies>
-  
-  <build>
+		</dependency>
+	</dependencies>
+
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-			  	<artifactId>exec-maven-plugin</artifactId>
-			  	<version>1.2.1</version>
-			  	<executions>
-				    <execution>
-				      <goals>
-				        <goal>java</goal>
-				      </goals>
-			    	</execution>
-			  	</executions>
-			  	<configuration>
-				    <mainClass>com.minitwit.App</mainClass>
-				    <arguments>
-				    </arguments>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>${exec-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.minitwit.App</mainClass>
+          <systemProperties>
+            <systemProperty>
+              <key>file.encoding</key>
+              <value>UTF-8</value>
+            </systemProperty>
+          </systemProperties>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.minitwit.App</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>${heroku-maven-plugin.version}</version>
+				<configuration>
+					<jdkVersion>${jdk.version}</jdkVersion>
+					<appName>esktwit</appName>
+					<processTypes>
+						<web>java -jar target/minitwit-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
+					</processTypes>
 				</configuration>
 			</plugin>
 		</plugins>
