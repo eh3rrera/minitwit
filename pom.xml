@@ -102,6 +102,7 @@
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 
@@ -118,8 +119,12 @@
 				</executions>
 				<configuration>
 					<mainClass>com.minitwit.App</mainClass>
-					<arguments>
-					</arguments>
+          <systemProperties>
+            <systemProperty>
+              <key>file.encoding</key>
+              <value>UTF-8</value>
+            </systemProperty>
+          </systemProperties>
 				</configuration>
 			</plugin>
 

@@ -12,6 +12,12 @@ a:hover {
 	color: #333;
 }
 
+.onlydigit {
+  width: 30px;
+  ime-mode: disabled;
+  text-align: right;
+}
+
 input[type="text"], input[type="password"] {
 	background: white;
 	border: 1px solid #BFE6FF;
@@ -39,7 +45,7 @@ div.page {
 	background: white;
 	border: 1px solid #6ECCFF;
 	width: 700px;
-	margin: 30px auto;
+	margin: 10px auto;
 }
 
 div.page h1 {
@@ -169,10 +175,4 @@ div.success {
 	-webkit-border-radius: 2px;
 	padding: 4px;
 	font-size: 13px;
-}
-
-.onlydigit {
-  width: 30px;
-  ime-mode: disabled;
-  text-align: right;
 }
