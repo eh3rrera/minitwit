@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>${title} | MiniTwit</title>
     <link href="/jquery-validation/validate.css" type="text/css" rel="stylesheet" />
     <link href="/css/style.css" type="text/css" rel="stylesheet" />
@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="page">
-      <h1>MiniTwit</h1>
+      <h1>MiniTwit -- improved by 王東強</h1>
 		  <div class="navigation">
 		    <#if user??>
 		    	<a href="/t">my timeline</a> |
