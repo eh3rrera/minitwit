@@ -6,18 +6,19 @@
   
   <properties>
 		<jdk.version>1.8</jdk.version>
-		<spark.version>2.2</spark.version>
-		<spark.freemarker.version>2.0.0</spark.freemarker.version>
-		<freemarker.version>2.3.23</freemarker.version>
-		<spring.version>4.2.0.RELEASE</spring.version>
-		<hsqldb.version>2.3.3</hsqldb.version>
+		<spark.version>2.5.4</spark.version>
+		<spark.freemarker.version>2.3</spark.freemarker.version>
+		<freemarker.version>2.3.25-incubating</freemarker.version>
+		<spring.version>4.3.5.RELEASE</spring.version>
+		<hsqldb.version>2.3.4</hsqldb.version>
 		<dbcp.version>2.1.1</dbcp.version>
-		<jbcrypt.version>0.4</jbcrypt.version>
-		<commons.beanutils.version>1.9.2</commons.beanutils.version>
+		<jbcrypt.version>0.4.1</jbcrypt.version>
+		<commons.beanutils.version>1.9.3</commons.beanutils.version>
+		<slf4j.version>1.7.22</slf4j.version>
 	</properties>
   
   <dependencies>
-  		<!-- Spark JAva -->
+  		<!-- Spark Java -->
 	    <dependency>
 	        <groupId>com.sparkjava</groupId>
 	        <artifactId>spark-core</artifactId>
@@ -85,7 +86,14 @@
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>${commons.beanutils.version}</version>
-		</dependency>	
+		</dependency>
+		
+		<!-- To enable logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
   </dependencies>
   
   <build>

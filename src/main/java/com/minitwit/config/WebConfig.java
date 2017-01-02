@@ -4,7 +4,7 @@ import static spark.Spark.before;
 import static spark.Spark.get;
 import static spark.Spark.halt;
 import static spark.Spark.post;
-import static spark.SparkBase.staticFileLocation;
+import static spark.Spark.staticFileLocation;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -185,7 +185,7 @@ public class WebConfig {
 			User user = new User();
 			try {
 				MultiMap<String> params = new MultiMap<String>();
-				UrlEncoded.decodeTo(req.body(), params, "UTF-8", -1);
+				UrlEncoded.decodeTo(req.body(), params, "UTF-8");
 				BeanUtils.populate(user, params);
 			} catch (Exception e) {
 				halt(501);
@@ -230,7 +230,7 @@ public class WebConfig {
 			User user = new User();
 			try {
 				MultiMap<String> params = new MultiMap<String>();
-				UrlEncoded.decodeTo(req.body(), params, "UTF-8", -1);
+				UrlEncoded.decodeTo(req.body(), params, "UTF-8");
 				BeanUtils.populate(user, params);
 			} catch (Exception e) {
 				halt(501);
@@ -270,7 +270,7 @@ public class WebConfig {
 		post("/message", (req, res) -> {
 			User user = getAuthenticatedUser(req);
 			MultiMap<String> params = new MultiMap<String>();
-			UrlEncoded.decodeTo(req.body(), params, "UTF-8", -1);
+			UrlEncoded.decodeTo(req.body(), params, "UTF-8");
 			Message m = new Message();
 			m.setUserId(user.getId());
 			m.setPubDate(new Date());
