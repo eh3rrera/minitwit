@@ -2,6 +2,8 @@
 
 Java version of Flask's MiniTwit example built with the Spark web microframework, Freemarker, Spring and HSQLDB (as an in-memory database).
 
+Thanks to [SamAsEnd](https://github.com/SamAsEnd) for given this project a [better look](https://github.com/eh3rrera/minitwit/pull/8). You can find the original theme referenced by the [tutorial](http://sparkjava.com/tutorials/twitter-clone) in [this branch](https://github.com/eh3rrera/minitwit/tree/original_theme).
+
 ## Prerequisites
 
 - Java 8
